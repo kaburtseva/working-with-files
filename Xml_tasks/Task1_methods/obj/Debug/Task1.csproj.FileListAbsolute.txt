@@ -1,0 +1,6 @@
+C:\Users\kateryna.burtseva\Documents\CharpTrivial\Xml_tasks\Task1_methods\bin\Debug\Task1_methods.exe
+C:\Users\kateryna.burtseva\Documents\CharpTrivial\Xml_tasks\Task1_methods\bin\Debug\Task1_methods.pdb
+C:\Users\kateryna.burtseva\Documents\CharpTrivial\Xml_tasks\Task1_methods\obj\Debug\Task1.csprojResolveAssemblyReference.cache
+C:\Users\kateryna.burtseva\Documents\CharpTrivial\Xml_tasks\Task1_methods\obj\Debug\Task1.csproj.CoreCompileInputs.cache
+C:\Users\kateryna.burtseva\Documents\CharpTrivial\Xml_tasks\Task1_methods\obj\Debug\Task1_methods.exe
+C:\Users\kateryna.burtseva\Documents\CharpTrivial\Xml_tasks\Task1_methods\obj\Debug\Task1_methods.pdb
