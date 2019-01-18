@@ -1,0 +1,5 @@
+C:\Users\kateryna.burtseva\Documents\CharpTrivial\DataIntegration\CSV_Integration\bin\Debug\CSV_Integration.exe
+C:\Users\kateryna.burtseva\Documents\CharpTrivial\DataIntegration\CSV_Integration\bin\Debug\CSV_Integration.pdb
+C:\Users\kateryna.burtseva\Documents\CharpTrivial\DataIntegration\CSV_Integration\obj\Debug\CSV_Integration.csproj.CoreCompileInputs.cache
+C:\Users\kateryna.burtseva\Documents\CharpTrivial\DataIntegration\CSV_Integration\obj\Debug\CSV_Integration.exe
+C:\Users\kateryna.burtseva\Documents\CharpTrivial\DataIntegration\CSV_Integration\obj\Debug\CSV_Integration.pdb

@@ -1,0 +1,11 @@
+C:\Users\kateryna.burtseva\Documents\CharpTrivial\DataIntegration\JsonIntegration\bin\Debug\JsonIntegration.exe.config
+C:\Users\kateryna.burtseva\Documents\CharpTrivial\DataIntegration\JsonIntegration\bin\Debug\JsonIntegration.exe
+C:\Users\kateryna.burtseva\Documents\CharpTrivial\DataIntegration\JsonIntegration\bin\Debug\JsonIntegration.pdb
+C:\Users\kateryna.burtseva\Documents\CharpTrivial\DataIntegration\JsonIntegration\bin\Debug\Newtonsoft.Json.dll
+C:\Users\kateryna.burtseva\Documents\CharpTrivial\DataIntegration\JsonIntegration\bin\Debug\Newtonsoft.Json.pdb
+C:\Users\kateryna.burtseva\Documents\CharpTrivial\DataIntegration\JsonIntegration\bin\Debug\Newtonsoft.Json.xml
+C:\Users\kateryna.burtseva\Documents\CharpTrivial\DataIntegration\JsonIntegration\obj\Debug\Json_Integration.csprojAssemblyReference.cache
+C:\Users\kateryna.burtseva\Documents\CharpTrivial\DataIntegration\JsonIntegration\obj\Debug\Json_Integration.csproj.CoreCompileInputs.cache
+C:\Users\kateryna.burtseva\Documents\CharpTrivial\DataIntegration\JsonIntegration\obj\Debug\Json_Integration.csproj.CopyComplete
+C:\Users\kateryna.burtseva\Documents\CharpTrivial\DataIntegration\JsonIntegration\obj\Debug\JsonIntegration.exe
+C:\Users\kateryna.burtseva\Documents\CharpTrivial\DataIntegration\JsonIntegration\obj\Debug\JsonIntegration.pdb

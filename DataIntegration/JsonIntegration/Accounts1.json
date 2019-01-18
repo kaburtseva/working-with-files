@@ -1,0 +1,24 @@
+[
+	{
+		"FistName": "Kate",
+		"LastName": "Burtseva",
+		"LoginName": "KBurtseva",
+		"Password": "123456789",
+		"IsAdministrator": "false",
+		"Enabled": "true",
+		"Language": "Russian",
+		"ExpirationDate": "03-21-2020",
+		"AccountName": "Katerina"
+	},
+	{
+		"FistName": "Alona",
+		"LastName": "Suprun",
+		"LoginName": "ASuprun",
+		"Password": "123456789",
+		"IsAdministrator": "true",
+		"Enabled": "true",
+		"Language": "Ukrainian",
+		"ExpirationDate": "12-13-2018",
+		"AccountName": "Alonka"
+	}
+]

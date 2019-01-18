@@ -1,0 +1,5 @@
+C:\Users\kateryna.burtseva\Documents\CharpTrivial\DataIntegration\DataIntegration\bin\Debug\DataIntegration.exe
+C:\Users\kateryna.burtseva\Documents\CharpTrivial\DataIntegration\DataIntegration\bin\Debug\DataIntegration.pdb
+C:\Users\kateryna.burtseva\Documents\CharpTrivial\DataIntegration\DataIntegration\obj\Debug\Excel_Integration.csproj.CoreCompileInputs.cache
+C:\Users\kateryna.burtseva\Documents\CharpTrivial\DataIntegration\DataIntegration\obj\Debug\DataIntegration.exe
+C:\Users\kateryna.burtseva\Documents\CharpTrivial\DataIntegration\DataIntegration\obj\Debug\DataIntegration.pdb
