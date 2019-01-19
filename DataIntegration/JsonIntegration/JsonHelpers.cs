@@ -32,13 +32,22 @@ namespace JsonIntegration
 
         public void UpdateAccount(Account account)
         {
-            Console.WriteLine("updating...");
+            //TODO: Add exception if account isn't exist
             var jsonString = File.ReadAllText(PathToFile);
             string jsonData = JsonConvert.SerializeObject(account, Formatting.Indented);
-            Console.WriteLine(jsonData);
+            File.WriteAllText(PathToFile, jsonData);
         }
 
-        public void AddNewNode(string newNode)
+        public void AddNewAccount(string accountName)
+        {
+
+        }
+
+        public void PrintAllData(Account account)
+        {
+            Console.WriteLine(account.ToString());
+        }
+        public void DeleteAccount(Account account)
         {
 
         }

@@ -28,6 +28,15 @@ namespace JsonIntegration
             AccountName = accountName;
             ExpirationDate = expirationDate;
         }
+        public override string ToString()
+        {
+            new Account()
+            {
+                AccountName = AccountName
 
+
+            };
+            return ("Account name is {0}, first name is {2}") ;
+        }
     }
 }

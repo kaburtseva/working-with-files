@@ -9,3 +9,14 @@ C:\Users\kateryna.burtseva\Documents\CharpTrivial\DataIntegration\JsonIntegratio
 C:\Users\kateryna.burtseva\Documents\CharpTrivial\DataIntegration\JsonIntegration\obj\Debug\Json_Integration.csproj.CopyComplete
 C:\Users\kateryna.burtseva\Documents\CharpTrivial\DataIntegration\JsonIntegration\obj\Debug\JsonIntegration.exe
 C:\Users\kateryna.burtseva\Documents\CharpTrivial\DataIntegration\JsonIntegration\obj\Debug\JsonIntegration.pdb
+E:\WorkWithFiles\DataIntegration\JsonIntegration\bin\Debug\JsonIntegration.exe.config
+E:\WorkWithFiles\DataIntegration\JsonIntegration\bin\Debug\JsonIntegration.exe
+E:\WorkWithFiles\DataIntegration\JsonIntegration\bin\Debug\JsonIntegration.pdb
+E:\WorkWithFiles\DataIntegration\JsonIntegration\bin\Debug\Newtonsoft.Json.dll
+E:\WorkWithFiles\DataIntegration\JsonIntegration\bin\Debug\Newtonsoft.Json.pdb
+E:\WorkWithFiles\DataIntegration\JsonIntegration\bin\Debug\Newtonsoft.Json.xml
+E:\WorkWithFiles\DataIntegration\JsonIntegration\obj\Debug\Json_Integration.csprojAssemblyReference.cache
+E:\WorkWithFiles\DataIntegration\JsonIntegration\obj\Debug\Json_Integration.csproj.CoreCompileInputs.cache
+E:\WorkWithFiles\DataIntegration\JsonIntegration\obj\Debug\Json_Integration.csproj.CopyComplete
+E:\WorkWithFiles\DataIntegration\JsonIntegration\obj\Debug\JsonIntegration.exe
+E:\WorkWithFiles\DataIntegration\JsonIntegration\obj\Debug\JsonIntegration.pdb
