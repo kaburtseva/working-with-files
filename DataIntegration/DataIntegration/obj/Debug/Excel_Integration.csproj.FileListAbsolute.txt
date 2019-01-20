@@ -3,3 +3,12 @@ C:\Users\kateryna.burtseva\Documents\CharpTrivial\DataIntegration\DataIntegratio
 C:\Users\kateryna.burtseva\Documents\CharpTrivial\DataIntegration\DataIntegration\obj\Debug\Excel_Integration.csproj.CoreCompileInputs.cache
 C:\Users\kateryna.burtseva\Documents\CharpTrivial\DataIntegration\DataIntegration\obj\Debug\DataIntegration.exe
 C:\Users\kateryna.burtseva\Documents\CharpTrivial\DataIntegration\DataIntegration\obj\Debug\DataIntegration.pdb
+E:\WorkWithFiles\DataIntegration\DataIntegration\bin\Debug\DataIntegration.exe
+E:\WorkWithFiles\DataIntegration\DataIntegration\bin\Debug\DataIntegration.pdb
+E:\WorkWithFiles\DataIntegration\DataIntegration\bin\Debug\ExcelDataReader.dll
+E:\WorkWithFiles\DataIntegration\DataIntegration\bin\Debug\ExcelDataReader.xml
+E:\WorkWithFiles\DataIntegration\DataIntegration\obj\Debug\Excel_Integration.csprojAssemblyReference.cache
+E:\WorkWithFiles\DataIntegration\DataIntegration\obj\Debug\Excel_Integration.csproj.CoreCompileInputs.cache
+E:\WorkWithFiles\DataIntegration\DataIntegration\obj\Debug\Excel_Integration.csproj.CopyComplete
+E:\WorkWithFiles\DataIntegration\DataIntegration\obj\Debug\DataIntegration.exe
+E:\WorkWithFiles\DataIntegration\DataIntegration\obj\Debug\DataIntegration.pdb
