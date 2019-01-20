@@ -12,11 +12,14 @@ namespace JsonIntegration
 
         static void Main(string[] args)
         {
-            JsonHelpers jsonHelper = new JsonHelpers(pathToFile);
-
+            JsonHelpers jsonHelper = new JsonHelpers(pathToFile);          
             Account KateAccount = jsonHelper.GetAccount("AccountName", "Katerina");
+            jsonHelper.PrintAllData();
             KateAccount.FirstName = "Kate2";
             jsonHelper.UpdateAccount(KateAccount);
+            jsonHelper.PrintAllData();
+            jsonHelper.AddNewAccount("Test");
+            jsonHelper.DeleteAccount("Test");
             Console.ReadLine();
         }
     }
