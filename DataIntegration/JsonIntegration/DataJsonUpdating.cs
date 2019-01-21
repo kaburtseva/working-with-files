@@ -8,18 +8,20 @@ namespace JsonIntegration
 {
     public class DataJsonUpdating
     {
-        private static string pathToFile = "E:\\WorkWithFiles\\DataIntegration\\JsonIntegration\\Accounts1.json";
+        private static string pathToFile = "C:\\Users\\kateryna.burtseva\\Documents\\working-with-files\\DataIntegration\\JsonIntegration\\Accounts1.json";
 
         static void Main(string[] args)
         {
-            JsonHelpers jsonHelper = new JsonHelpers(pathToFile);          
+            JsonHelpers jsonHelper = new JsonHelpers(pathToFile);
             Account KateAccount = jsonHelper.GetAccount("AccountName", "Katerina");
+            Console.WriteLine(KateAccount.ToString());
             jsonHelper.PrintAllData();
             KateAccount.FirstName = "Kate2";
             jsonHelper.UpdateAccount(KateAccount);
             jsonHelper.PrintAllData();
-            jsonHelper.AddNewAccount("Test");
-            jsonHelper.DeleteAccount("Test");
+            var acc = new Account() { AccountName = "abc", Language = "RUS" };
+            jsonHelper.AddNewAccount(acc);
+            jsonHelper.DeleteAccount("abc");
             Console.ReadLine();
         }
     }

@@ -20,3 +20,14 @@ E:\WorkWithFiles\DataIntegration\JsonIntegration\obj\Debug\Json_Integration.cspr
 E:\WorkWithFiles\DataIntegration\JsonIntegration\obj\Debug\JsonIntegration.exe
 E:\WorkWithFiles\DataIntegration\JsonIntegration\obj\Debug\JsonIntegration.pdb
 E:\WorkWithFiles\DataIntegration\JsonIntegration\obj\Debug\Json_Integration.csprojAssemblyReference.cache
+C:\Users\kateryna.burtseva\Documents\working-with-files\DataIntegration\JsonIntegration\bin\Debug\JsonIntegration.exe.config
+C:\Users\kateryna.burtseva\Documents\working-with-files\DataIntegration\JsonIntegration\bin\Debug\JsonIntegration.exe
+C:\Users\kateryna.burtseva\Documents\working-with-files\DataIntegration\JsonIntegration\bin\Debug\JsonIntegration.pdb
+C:\Users\kateryna.burtseva\Documents\working-with-files\DataIntegration\JsonIntegration\bin\Debug\Newtonsoft.Json.dll
+C:\Users\kateryna.burtseva\Documents\working-with-files\DataIntegration\JsonIntegration\bin\Debug\Newtonsoft.Json.pdb
+C:\Users\kateryna.burtseva\Documents\working-with-files\DataIntegration\JsonIntegration\bin\Debug\Newtonsoft.Json.xml
+C:\Users\kateryna.burtseva\Documents\working-with-files\DataIntegration\JsonIntegration\obj\Debug\Json_Integration.csprojAssemblyReference.cache
+C:\Users\kateryna.burtseva\Documents\working-with-files\DataIntegration\JsonIntegration\obj\Debug\Json_Integration.csproj.CoreCompileInputs.cache
+C:\Users\kateryna.burtseva\Documents\working-with-files\DataIntegration\JsonIntegration\obj\Debug\Json_Integration.csproj.CopyComplete
+C:\Users\kateryna.burtseva\Documents\working-with-files\DataIntegration\JsonIntegration\obj\Debug\JsonIntegration.exe
+C:\Users\kateryna.burtseva\Documents\working-with-files\DataIntegration\JsonIntegration\obj\Debug\JsonIntegration.pdb

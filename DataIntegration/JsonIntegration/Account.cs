@@ -36,13 +36,18 @@ namespace JsonIntegration
 
         public override string ToString()
         {
-            new Account()
-            {
-                AccountName = AccountName
+            return (
+                $"Account Name: {this.AccountName} " +
+                $"Login Name: {this.LoginName} " +
+                $"First name: {this.FirstName} " +
+                $"Last name: {this.LastName} " +
+                $"Password: {this.Password} " +
+                $"Enabled: {this.Enabled} " +
+                $"Language: {this.Language}" +
+                $"IsAdministrator: {this.IsAdministrator}" +
+                $"ExpirationDate: {this.ExpirationDate}"
+                );
 
-
-            };
-            return ("Account name is {0}, first name is {2}") ;
         }
     }
 }
