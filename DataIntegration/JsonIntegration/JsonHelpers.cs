@@ -14,7 +14,7 @@ namespace JsonIntegration
         {
             PathToFile = pathToFile;
         }
-
+        private string DuplicatePathToFile = @"E:\WorkWithFiles\DataIntegration\JsonIntegration\AccountsDuplicate.json";
         public Account GetAccount(string parameter, string parameterName)
         {
             using (StreamReader r = new StreamReader(PathToFile))
@@ -22,7 +22,6 @@ namespace JsonIntegration
                 var jsonString = r.ReadToEnd();
                 JArray jarr = JArray.Parse(jsonString);
                 var token = $"$.[?(@" + parameter + "== '" + parameterName + "')]";
-                //if (Array.Exists(jarr, element => element == parameterName))
                 try
                 {
                     JToken accountData = jarr.SelectToken(token);
@@ -49,7 +48,8 @@ namespace JsonIntegration
             var jsonString = File.ReadAllText(PathToFile);
             var list = JsonConvert.DeserializeObject<List<Account>>(jsonString);
             list.Add(account);
-            var convertedJson = JsonConvert.SerializeObject(list, Formatting.Indented);
+            var convertedJson = JsonConvert.SerializeObject(list, Formatting.Indented,
+                new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
             File.WriteAllText(PathToFile, convertedJson);
         }
 
@@ -76,6 +76,18 @@ namespace JsonIntegration
             {
                 Console.WriteLine("Current account isn't exist");
             }
+        }
+
+        public void DulicateExistingFile()
+        {
+            var jsonString = File.ReadAllText(PathToFile);
+            File.WriteAllText(DuplicatePathToFile, jsonString);
+        }
+
+        public void ResetToOldFile()
+        {
+            var jsonString = File.ReadAllText(DuplicatePathToFile);
+            File.WriteAllText(PathToFile, jsonString);
         }
 
     }
