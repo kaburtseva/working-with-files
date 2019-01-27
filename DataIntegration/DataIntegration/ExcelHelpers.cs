@@ -1,5 +1,9 @@
-﻿using System;
+﻿using Aspose.Cells;
+using Aspose.Cells.Tables;
+using ExcelIntegration;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,48 +18,77 @@ namespace DataIntegration
         {
             PathToFile = pathToFile;
         }
+
+        private string DuplicatePathToFile = @"E:\WorkWithFiles\DataIntegration\DataIntegration\Accounts_excelDuplicate.xlsx";
         public ExcelHelpers()
         {
             
         }
-        public void GetAccount()
+        public void SelectAccount(string accountName)
         {
-            Excel.Application xlApp = new Excel.Application();
-            Excel.Workbook xlWorkbook = xlApp.Workbooks.Open(PathToFile);
-            Excel._Worksheet xlWorksheet = xlWorkbook.Sheets[1];
-            Excel.Range xlRange = xlWorksheet.UsedRange;
+            FileStream fstream = new FileStream(PathToFile, FileMode.Open);
+            Workbook workbook = new Workbook(fstream);
+            Worksheet worksheet = workbook.Worksheets["Sheet1"];
+            worksheet.AutoFilter.Custom(0, FilterOperatorType.Contains, accountName);
+            worksheet.AutoFilter.Refresh();
+            workbook.Save(DuplicatePathToFile);
 
-            for (int i = 1; i <= 10; i++)
-            {
-                for (int j = 1; j <= 2; j++)
-                {
-                    
-                    if (j == 1)
-                        Console.Write("\r\n");
-
-                   
-                    if (xlRange.Cells[i, j] != null && xlRange.Cells[i, j].Value2 != null)
-                        Console.Write(xlRange.Cells[i, j].Value2.ToString() + "\t");
-
-                    
-                }
-            }
+            
         }
+
+        public Account GetAccount(string accountName)
+        {
+            SelectAccount(accountName);
+            FileStream fstream = new FileStream(DuplicatePathToFile, FileMode.Open);
+            Workbook workbook = new Workbook(fstream);
+            Worksheet worksheet = workbook.Worksheets["Sheet1"];
+            Aspose.Cells.Tables.ListObjectCollection listObjects = workbook.Worksheets[0].ListObjects;
+            List<Account> oList = listObjects.Cast<Account>().ToList();
+            return new Account();
+        }
+
         public void UpdateAccount()
         {
 
         }
-        public void AddNewAccount()
+        public void AddNewAccount(Account account)
         {
+            Workbook wb = new Workbook(PathToFile);           
+            Worksheet worksheet = wb.Worksheets[0];            
+            Cells cells = worksheet.Cells;           
+            List<string> myList = new List<string>();
+            int col = 9;  
+            int last_row = worksheet.Cells.GetLastDataRow(col);
+            
+            for (int i = 8; i <= last_row; i++)
+            {
+                myList.Add(cells[i, col].Value.ToString());
+            }           
+            List<Account> oList = myList.Cast<Account>().ToList();
+            oList.Add(account);
+            wb.Save(DuplicatePathToFile);
 
         }
+    
         public void DeleteAccount()
         {
-
+            //workbook.Worksheets.RemoveAt("Sheet1");
         }
         public void PrintAllData()
         {
 
+        }
+
+        public void DuplicateCurrentFile()
+        {
+            var exString = File.ReadAllText(PathToFile);
+            File.WriteAllText(DuplicatePathToFile, exString);
+        }
+
+        public void ResetOldFile()
+        {
+            var exString = File.ReadAllText(DuplicatePathToFile);
+            File.WriteAllText(PathToFile, exString);
         }
     }
 }
