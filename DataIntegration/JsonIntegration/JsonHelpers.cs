@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Model;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -13,8 +14,9 @@ namespace JsonIntegration
         public JsonHelpers(string pathToFile)
         {
             PathToFile = pathToFile;
+            //TODO: create duplicate file based on existing
         }
-        private string DuplicatePathToFile = @"E:\WorkWithFiles\DataIntegration\JsonIntegration\AccountsDuplicate.json";
+        private string DuplicatePathToFile = @"C:\Users\kateryna.burtseva\Documents\working-with-files\working-with-files\DataIntegration\JsonIntegration\AccountsDuplicate.json";
         public Account GetAccount(string parameter, string parameterName)
         {
             using (StreamReader r = new StreamReader(PathToFile))

@@ -47,7 +47,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Account.cs" />
     <Compile Include="DataJsonUpdating.cs" />
     <Compile Include="JsonHelpers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -55,6 +54,12 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Model\Model.csproj">
+      <Project>{7a8dd4bc-cf0f-4149-9c57-f4c24e710888}</Project>
+      <Name>Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

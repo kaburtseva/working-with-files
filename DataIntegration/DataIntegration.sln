@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Json_Integration", "JsonInt
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSV_Integration", "CSV_Integration\CSV_Integration.csproj", "{1B7C38F7-D13B-4F4E-AFEE-D6A46C64914D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "Model\Model.csproj", "{7A8DD4BC-CF0F-4149-9C57-F4C24E710888}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{1B7C38F7-D13B-4F4E-AFEE-D6A46C64914D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1B7C38F7-D13B-4F4E-AFEE-D6A46C64914D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1B7C38F7-D13B-4F4E-AFEE-D6A46C64914D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A8DD4BC-CF0F-4149-9C57-F4C24E710888}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A8DD4BC-CF0F-4149-9C57-F4C24E710888}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A8DD4BC-CF0F-4149-9C57-F4C24E710888}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A8DD4BC-CF0F-4149-9C57-F4C24E710888}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

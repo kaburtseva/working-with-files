@@ -1,16 +1,11 @@
-﻿using ExcelIntegration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Model;
 
 namespace DataIntegration
 {
     public class DataExcelIntegration
     {
 
-        private static readonly string pathToFile = @"E:\WorkWithFiles\DataIntegration\DataIntegration\Accounts_excel.xlsx";
+        private static readonly string pathToFile = @"C:\Users\kateryna.burtseva\Documents\working-with-files\working-with-files\DataIntegration\DataIntegration\Accounts_excel.xlsx";
         static void Main(string[] args)
         {
             ExcelHelpers exhelpers = new ExcelHelpers(pathToFile);

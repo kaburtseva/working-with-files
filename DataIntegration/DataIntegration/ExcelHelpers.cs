@@ -1,13 +1,8 @@
 ﻿using Aspose.Cells;
-using Aspose.Cells.Tables;
-using ExcelIntegration;
-using System;
+using Model;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Excel = Microsoft.Office.Interop.Excel;
 
 namespace DataIntegration
 {
@@ -19,7 +14,7 @@ namespace DataIntegration
             PathToFile = pathToFile;
         }
 
-        private string DuplicatePathToFile = @"E:\WorkWithFiles\DataIntegration\DataIntegration\Accounts_excelDuplicate.xlsx";
+        private string DuplicatePathToFile = @"C:\Users\kateryna.burtseva\Documents\working-with-files\working-with-files\DataIntegration\DataIntegration\Accounts_excelDuplicate.xlsx";
         public ExcelHelpers()
         {
             
