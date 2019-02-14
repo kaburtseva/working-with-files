@@ -8,6 +8,7 @@ using System.Linq;
 using System.Drawing;
 using System.Windows.Forms;
 using Application = Microsoft.Office.Interop.Excel.Application;
+using System.Data.OleDb;
 
 namespace DataIntegration
 {
@@ -15,13 +16,14 @@ namespace DataIntegration
     {
         private string PathToFile;
         private string DuplicatePathToFile = null;
-        
+
         public ExcelHelpers(string pathToFile)
         {
             PathToFile = pathToFile;
         }
+        private int columnSize = 9;
+        private int rowSize = 3;
 
-       
         public void MatchContentToIndex()
         {
             List<string> accountProperties = typeof(Account).GetProperties().Select(p => p.Name).ToList();
@@ -40,31 +42,26 @@ namespace DataIntegration
             Excel.Workbook xlWorkbook = xlApp.Workbooks.Open(PathToFile);
             Excel._Worksheet xlWorksheet = xlWorkbook.Sheets[1];
             Excel.Range xlRange = xlWorksheet.UsedRange;
-            object[,] valueArray;
-            List<string> columnNames = new List<string>();
-            valueArray = (object[,])xlRange.get_Value(XlRangeValueDataType.xlRangeValueDefault);
-
-            for (int colIndex = 0; colIndex < valueArray.GetLength(1); colIndex++)
+            Excel.Range row1 = xlRange.Rows["1:1"];
+            int colIndex = 0;
+            foreach (Microsoft.Office.Interop.Excel.Range cell in row1.Cells)
             {
-                if (valueArray[0, colIndex] != null
-                    && !string.IsNullOrEmpty(valueArray[0, colIndex].ToString())) 
+                if (cell.Text == propertyName)
                 {
-
-                   columnNames.Add(valueArray[0, colIndex].ToString());
+                    Console.WriteLine(cell.Text);
+                    colIndex = cell.Column;
                 }
             }
 
-           //select specific column by value
-           //get index of it.
-                return 0;
+            return colIndex;
         }
-            
-        
-       
+
+
+
 
         public Account GetAccount(string accountName)
         {
-           
+
             return new Account();
         }
 
@@ -74,20 +71,20 @@ namespace DataIntegration
         }
         public void AddNewAccount(Account account)
         {
-         //   Workbook wb = new Workbook(PathToFile);
-           /// Worksheet worksheet = wb.Worksheets[0];
-          //  Cells cells = worksheet.Cells;
-           // List<string> myList = new List<string>();
-           // int col = 9;
-           // int last_row = worksheet.Cells.GetLastDataRow(col);
+            //   Workbook wb = new Workbook(PathToFile);
+            /// Worksheet worksheet = wb.Worksheets[0];
+            //  Cells cells = worksheet.Cells;
+            // List<string> myList = new List<string>();
+            // int col = 9;
+            // int last_row = worksheet.Cells.GetLastDataRow(col);
 
-          //  for (int i = 8; i <= last_row; i++)
-          //  {
-          //      myList.Add(cells[i, col].Value.ToString());
-          //  }
-           // List<Account> oList = myList.Cast<Account>().ToList();
-          //  oList.Add(account);
-          //  wb.Save(DuplicatePathToFile);
+            //  for (int i = 8; i <= last_row; i++)
+            //  {
+            //      myList.Add(cells[i, col].Value.ToString());
+            //  }
+            // List<Account> oList = myList.Cast<Account>().ToList();
+            //  oList.Add(account);
+            //  wb.Save(DuplicatePathToFile);
 
         }
 

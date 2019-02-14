@@ -5,14 +5,14 @@ namespace DataIntegration
     public class DataExcelIntegration
     {
 
-      //  private static readonly string pathToFile = @"C:\Users\kateryna.burtseva\Documents\working-with-files\working-with-files\DataIntegration\DataIntegration\Accounts_excel.xlsx";
+        private static readonly string pathToFile = @"C:\Users\kateryna.burtseva\Documents\working-with-files\working-with-files\DataIntegration\DataIntegration\Accounts_excel.xlsx";
         static void Main(string[] args)
         {
             ExcelHelpers exhelpers = new ExcelHelpers(pathToFile);
 
-          //  Account KateAccount = exhelpers.GetAccount("Katerina");
+            //  Account KateAccount = exhelpers.GetAccount("Katerina");
             exhelpers.GetPropertyIndex("AccountName");
-           
+
 
         }
     }
