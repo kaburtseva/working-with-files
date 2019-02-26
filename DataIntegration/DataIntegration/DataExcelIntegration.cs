@@ -10,8 +10,8 @@ namespace DataIntegration
         {
             ExcelHelpers exhelpers = new ExcelHelpers(pathToFile);
 
-            //  Account KateAccount = exhelpers.GetAccount("Katerina");
-            exhelpers.GetPropertyIndex("AccountName");
+             exhelpers.GetAllAccounts();
+           
 
 
         }
