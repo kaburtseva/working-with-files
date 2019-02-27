@@ -11,6 +11,7 @@ using Application = Microsoft.Office.Interop.Excel.Application;
 using System.Data.OleDb;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.ComponentModel;
 
 namespace DataIntegration
 {
@@ -25,16 +26,16 @@ namespace DataIntegration
         }
         private int columnSize = 9;
         private int rowSize = 3;
-        Dictionary<int, string> accountMapping;
-        public Dictionary<int, string> MatchContentToIndex()
+        Dictionary<string, int> accountMapping;
+        public Dictionary<string, int> MatchContentToIndex()
         {
             List<string> accountProperties = typeof(Account).GetProperties().Select(p => p.Name).ToList();
-            Dictionary<int, string> accountMapping = new Dictionary<int, string>();
+            Dictionary<string, int> accountMapping = new Dictionary<string, int>();
 
             foreach (string propertyName in accountProperties)
             {
                 int propertyIndex = GetPropertyIndex(propertyName);
-                accountMapping.Add(propertyIndex, propertyName);
+                accountMapping.Add(propertyName, propertyIndex);
             }
 
             return accountMapping;
@@ -49,7 +50,7 @@ namespace DataIntegration
             Excel.Range xlRange = xlWorksheet.UsedRange;
             Excel.Range row1 = xlRange.Rows["1:1"];
 
-            int colIndex = 0;
+            int colIndex = -1;
             foreach (Microsoft.Office.Interop.Excel.Range cell in row1.Cells)
             {
                 if (cell.Text == propertyName)
@@ -82,16 +83,19 @@ namespace DataIntegration
             {
                 Account account = new Account();
 
-                foreach (int columnIndex in accountMapping.Keys.Skip(1))
+            foreach (string propertyName in accountMapping.Keys)
                 {
-
-                    object rangeObject = xlRange.Cells[rowIndex, columnIndex];
+                    object rangeObject = xlRange.Cells[rowIndex, accountMapping[propertyName]];
                     Range range = (Range)rangeObject;
                     object rangeValue = range.Value2;
                     string value = rangeValue.ToString();
+                    //DateTime dt = DateTime.FromOADate(value);
                     Type accountType = typeof(Account);
-                    PropertyInfo myPropertyInfo = accountType.GetProperty(accountMapping[columnIndex]);
-                    myPropertyInfo.SetValue(account, value);
+                    PropertyInfo myPropertyInfo = accountType.GetProperty(propertyName);
+                    var converter = TypeDescriptor.GetConverter(myPropertyInfo.PropertyType);
+                    var result = converter.ConvertFrom(value);
+                   
+                    myPropertyInfo.SetValue(account, result);
                 }
 
                 accountList.Add(account);

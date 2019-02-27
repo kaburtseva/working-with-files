@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,11 +17,14 @@ namespace Model
         public bool IsAdministrator { get; set; }
         public bool Enabled { get; set; }
         public string Language { get; set; }
-        public DateTime ExpirationDate { get; set; }
+        private static string date = null;
+        public DateTime ExpirationDate { get; set; } = DateTime.UtcNow; 
+          
         public string AccountName { get; set; }
-
+        
         public Account()
         {
+         
         }
 
         public Account(string accountName, DateTime expirationDate)
