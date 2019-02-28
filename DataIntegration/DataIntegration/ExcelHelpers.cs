@@ -12,11 +12,18 @@ using System.Data.OleDb;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.ComponentModel;
+using System.Diagnostics;
 
 namespace DataIntegration
 {
     public class ExcelHelpers
     {
+        //TODO: declate excel variables(4). 
+        //TODO: Initiatilize excel method(open) - use in constructor
+        //TODO: Dispose excel method
+        //TODO: Update, delete, add new accounts method
+        
+
         private string PathToFile;
         private string DuplicatePathToFile = null;
 
@@ -24,25 +31,17 @@ namespace DataIntegration
         {
             PathToFile = pathToFile;
         }
-        private int columnSize = 9;
-        private int rowSize = 3;
+
         Dictionary<string, int> accountMapping;
         public Dictionary<string, int> MatchContentToIndex()
         {
             List<string> accountProperties = typeof(Account).GetProperties().Select(p => p.Name).ToList();
-            Dictionary<string, int> accountMapping = new Dictionary<string, int>();
-
-            foreach (string propertyName in accountProperties)
-            {
-                int propertyIndex = GetPropertyIndex(propertyName);
-                accountMapping.Add(propertyName, propertyIndex);
-            }
-
-            return accountMapping;
-
+            return GetPropertiesIndexes(accountProperties);          
         }
-        public int GetPropertyIndex(string propertyName)
+
+        public Dictionary<string, int> GetPropertiesIndexes(List<string> accountProperties)
         {
+            Dictionary<string, int> accountMapping = new Dictionary<string, int>();
 
             Excel.Application xlApp = new Excel.Application();
             Excel.Workbook xlWorkbook = xlApp.Workbooks.Open(PathToFile);
@@ -50,15 +49,21 @@ namespace DataIntegration
             Excel.Range xlRange = xlWorksheet.UsedRange;
             Excel.Range row1 = xlRange.Rows["1:1"];
 
-            int colIndex = -1;
-            foreach (Microsoft.Office.Interop.Excel.Range cell in row1.Cells)
+            foreach (string propertyName in accountProperties)
             {
-                if (cell.Text == propertyName)
+                int colIndex = -1;
+                foreach (Microsoft.Office.Interop.Excel.Range cell in row1.Cells)
                 {
-                    Console.WriteLine(cell.Text);
-                    colIndex = cell.Column;
+                    if (cell.Text == propertyName)
+                    {
+                        Console.WriteLine(cell.Text);
+                        colIndex = cell.Column;
+                    }
                 }
+
+                accountMapping.Add(propertyName, colIndex);
             }
+
             GC.Collect();
             GC.WaitForPendingFinalizers();
             Marshal.ReleaseComObject(xlRange);
@@ -67,8 +72,10 @@ namespace DataIntegration
             Marshal.ReleaseComObject(xlWorkbook);
             xlApp.Quit();
             Marshal.ReleaseComObject(xlApp);
-            return colIndex;
+            return accountMapping;
+
         }
+
 
         public List<Account> GetAllAccounts()
         {
@@ -81,42 +88,63 @@ namespace DataIntegration
 
             for (int rowIndex = 2; rowIndex <= 3; rowIndex++)
             {
-                Account account = new Account();
+                Account account = new Account();             
 
-            foreach (string propertyName in accountMapping.Keys)
+                foreach (string propertyName in accountMapping.Keys)
                 {
                     object rangeObject = xlRange.Cells[rowIndex, accountMapping[propertyName]];
                     Range range = (Range)rangeObject;
                     object rangeValue = range.Value2;
-                    string value = rangeValue.ToString();
-                    //DateTime dt = DateTime.FromOADate(value);
+                    string value = rangeValue.ToString();                    
                     Type accountType = typeof(Account);
                     PropertyInfo myPropertyInfo = accountType.GetProperty(propertyName);
                     var converter = TypeDescriptor.GetConverter(myPropertyInfo.PropertyType);
-                    var result = converter.ConvertFrom(value);
-                   
+                    var result = converter.ConvertFromInvariantString(value);
                     myPropertyInfo.SetValue(account, result);
                 }
 
                 accountList.Add(account);
             }
-
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            Marshal.ReleaseComObject(xlRange);
+            Marshal.ReleaseComObject(xlWorksheet);
+            xlWorkbook.Close();
+            Marshal.ReleaseComObject(xlWorkbook);
+            xlApp.Quit();
+            Marshal.ReleaseComObject(xlApp);           
             return accountList;
 
         }
 
-        public List<Account> GetAccount(string accountName)
+        public static void KillExcell()
+        {
+            try
+            {
+                Process[] procList = Process.GetProcessesByName("EXCEL");
+
+                foreach (Process proc in procList)
+                {
+                    proc.Kill();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message.ToString());
+            }
+        }
+
+        public Account GetAccount(string accountName)
         {
             var accountList = GetAllAccounts();
-            var  account = new List<Account>();
-            accountList.Where(i => i.AccountName == accountName);
-            return account;
+            var acc = accountList.Where(i => i.AccountName == accountName).FirstOrDefault();
+            return acc;
         }
 
-        public List<Account> UpdateAccount()
+        public Account UpdateAccount(string parameter)
         {
-            List<Account> accountList = new List<Account>();
-            return accountList;
+            var accountList = GetAllAccounts();
+            return new Account();
         }
         public void AddNewAccount(Account account)
         {
@@ -132,7 +160,7 @@ namespace DataIntegration
         {
 
         }
-
+        
         public void DuplicateCurrentFile()
         {
             string sourceDirectory = Path.GetDirectoryName(PathToFile);

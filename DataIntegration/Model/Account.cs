@@ -17,8 +17,7 @@ namespace Model
         public bool IsAdministrator { get; set; }
         public bool Enabled { get; set; }
         public string Language { get; set; }
-        private static string date = null;
-        public DateTime ExpirationDate { get; set; } = DateTime.UtcNow; 
+        public DateTime ExpirationDate { get; set; } 
           
         public string AccountName { get; set; }
         
@@ -27,16 +26,12 @@ namespace Model
          
         }
 
-        public Account(string accountName, DateTime expirationDate)
-        {
-            AccountName = accountName;
-            ExpirationDate = expirationDate;
-        }
-
         public Account(string accountName)
         {
             AccountName = accountName;
+           
         }
+      
 
         public override string ToString()
         {
