@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Model;
+using System;
 
 namespace JsonIntegration
 {
     public class DataJsonUpdating
     {
-        private static string pathToFile = @"E:\WorkWithFiles\DataIntegration\JsonIntegration\Accounts1.json";
+        private static string pathToFile = @"C:\Users\kateryna.burtseva\Documents\working-with-files\working-with-files\DataIntegration\JsonIntegration\Accounts1.json";
 
         static void Main(string[] args)
         {
@@ -23,6 +20,7 @@ namespace JsonIntegration
             var acc = new Account() { AccountName = "abc", Language = "RUS" };
             jsonHelper.AddNewAccount(acc);
             jsonHelper.DeleteAccount("abc");
+            jsonHelper.DeleteAccount("Alonka");
             jsonHelper.ResetToOldFile();
             Console.ReadLine();
         }

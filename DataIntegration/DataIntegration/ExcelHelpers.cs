@@ -1,88 +1,183 @@
-﻿using Aspose.Cells;
-using Aspose.Cells.Tables;
-using ExcelIntegration;
+﻿using Excel = Microsoft.Office.Interop.Excel;
+using Microsoft.Office.Interop.Excel;
+using Model;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Excel = Microsoft.Office.Interop.Excel;
+using System.Drawing;
+using System.Windows.Forms;
+using Application = Microsoft.Office.Interop.Excel.Application;
+using System.Data.OleDb;
+using System.Reflection;
+using System.Runtime.InteropServices;
+using System.ComponentModel;
+using System.Diagnostics;
 
 namespace DataIntegration
 {
     public class ExcelHelpers
     {
-        private string PathToFile;
+        //TODO: Initiatilize excel method(open) - use in constructor        
+        
+
+        private static string PathToFile;
+        private string DuplicatePathToFile = null;
+        public static Excel.Application xlApp;
+        public static Excel.Workbook xlWorkbook;
+        public static Excel._Worksheet xlWorksheet;
+        Excel.Range xlRange;
+        Dictionary<string, int> accountMapping;
+
         public ExcelHelpers(string pathToFile)
         {
             PathToFile = pathToFile;
+            //InitializeExcel();
+            //xlWorkbook = xlApp.Workbooks.Open(PathToFile);
         }
 
-        private string DuplicatePathToFile = @"E:\WorkWithFiles\DataIntegration\DataIntegration\Accounts_excelDuplicate.xlsx";
-        public ExcelHelpers()
-        {
-            
-        }
-        public void SelectAccount(string accountName)
-        {
-            FileStream fstream = new FileStream(PathToFile, FileMode.Open);
-            Workbook workbook = new Workbook(fstream);
-            Worksheet worksheet = workbook.Worksheets["Sheet1"];
-            worksheet.AutoFilter.Custom(0, FilterOperatorType.Contains, accountName);
-            worksheet.AutoFilter.Refresh();
-            workbook.Save(DuplicatePathToFile);
 
-            
+        public void InitializeExcel()
+        {
+            Excel.Application xlApp = new Excel.Application();
+            xlWorkbook = xlApp.Workbooks.Open(PathToFile);
+            xlWorksheet = xlWorkbook.Sheets[1];
+            xlRange = xlWorksheet.UsedRange;
+        }
+        public Dictionary<string, int> MatchContentToIndex()
+        {
+            InitializeExcel();
+            List<string> accountProperties = typeof(Account).GetProperties().Select(p => p.Name).ToList();
+            return GetPropertiesIndexes(accountProperties);
+        }
+
+        public Dictionary<string, int> GetPropertiesIndexes(List<string> accountProperties)
+        {
+            InitializeExcel();
+
+            Dictionary<string, int> accountMapping = new Dictionary<string, int>();
+
+            Excel.Range row1 = xlRange.Rows["1:1"];
+
+            foreach (string propertyName in accountProperties)
+            {
+                int colIndex = -1;
+                foreach (Microsoft.Office.Interop.Excel.Range cell in row1.Cells)
+                {
+                    if (cell.Text == propertyName)
+                    {
+                        Console.WriteLine(cell.Text);
+                        colIndex = cell.Column;
+                    }
+                }
+
+                accountMapping.Add(propertyName, colIndex);
+            }
+            DisposeExcel();
+            return accountMapping;
+
+        }
+
+
+        public List<Account> GetAllAccounts()
+        {
+            accountMapping = MatchContentToIndex();
+            List<Account> accountList = new List<Account>();
+            InitializeExcel();
+            for (int rowIndex = 2; rowIndex <= 3; rowIndex++)
+            {
+                Account account = new Account();
+
+                foreach (string propertyName in accountMapping.Keys)
+                {
+                    object rangeObject = xlRange.Cells[rowIndex, accountMapping[propertyName]];
+                    Range range = (Range)rangeObject;
+                    object rangeValue = range.Value2;
+                    string value = rangeValue.ToString();
+                    Type accountType = typeof(Account);
+                    PropertyInfo myPropertyInfo = accountType.GetProperty(propertyName);
+                    var converter = TypeDescriptor.GetConverter(myPropertyInfo.PropertyType);
+                    var result = converter.ConvertFromInvariantString(value);
+                    myPropertyInfo.SetValue(account, result);
+                }
+
+                accountList.Add(account);
+            }
+            DisposeExcel();
+            return accountList;
+
+        }
+
+        public static void KillExcell()
+        {
+            try
+            {
+                Process[] procList = Process.GetProcessesByName("EXCEL");
+
+                foreach (Process proc in procList)
+                {
+                    proc.Kill();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message.ToString());
+            }
         }
 
         public Account GetAccount(string accountName)
         {
-            SelectAccount(accountName);
-            FileStream fstream = new FileStream(DuplicatePathToFile, FileMode.Open);
-            Workbook workbook = new Workbook(fstream);
-            Worksheet worksheet = workbook.Worksheets["Sheet1"];
-            Aspose.Cells.Tables.ListObjectCollection listObjects = workbook.Worksheets[0].ListObjects;
-            List<Account> oList = listObjects.Cast<Account>().ToList();
-            return new Account();
+            var accountList = GetAllAccounts();
+            var acc = accountList.Where(i => i.AccountName == accountName).FirstOrDefault();
+            return acc;
         }
 
-        public void UpdateAccount()
+        public void UpdateAccount(Account accountToUpdate)
         {
-
+            Account account = GetAccount(accountToUpdate.AccountName);
+            DeleteAccount(accountToUpdate);
+            AddNewAccount(accountToUpdate);
         }
         public void AddNewAccount(Account account)
         {
-            Workbook wb = new Workbook(PathToFile);           
-            Worksheet worksheet = wb.Worksheets[0];            
-            Cells cells = worksheet.Cells;           
-            List<string> myList = new List<string>();
-            int col = 9;  
-            int last_row = worksheet.Cells.GetLastDataRow(col);
-            
-            for (int i = 8; i <= last_row; i++)
-            {
-                myList.Add(cells[i, col].Value.ToString());
-            }           
-            List<Account> oList = myList.Cast<Account>().ToList();
-            oList.Add(account);
-            wb.Save(DuplicatePathToFile);
+            var accountList = GetAllAccounts();
+            accountList.Add(account);
+            //TODO: need to add new account into non used range(below table)
+            xlWorkbook.Save();
+        }
 
-        }
-    
-        public void DeleteAccount()
+        public void DeleteAccount(Account account)
+            => DeleteAccount(account.AccountName);
+        public void DeleteAccount(string accountName)
         {
-            //workbook.Worksheets.RemoveAt("Sheet1");
+            var accountList = GetAllAccounts();
+            accountList.RemoveAll(account => account.AccountName == accountName);
+            xlWorkbook.Save();
         }
+
         public void PrintAllData()
         {
 
         }
-
+        public void DisposeExcel()
+        {
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            Marshal.ReleaseComObject(xlRange);
+            Marshal.ReleaseComObject(xlWorksheet);
+            xlWorkbook.Close();
+            Marshal.ReleaseComObject(xlWorkbook);
+            xlApp.Quit();
+            Marshal.ReleaseComObject(xlApp);
+        }
         public void DuplicateCurrentFile()
         {
-            var exString = File.ReadAllText(PathToFile);
-            File.WriteAllText(DuplicatePathToFile, exString);
+            string sourceDirectory = Path.GetDirectoryName(PathToFile);
+            string filenameWithoutExtension = Path.GetFileNameWithoutExtension(PathToFile);
+            string fileExtension = Path.GetExtension(PathToFile);
+            string destFileName = Path.Combine(sourceDirectory, filenameWithoutExtension + "-dub" + fileExtension);
+            DuplicatePathToFile = destFileName;
+            File.Copy(PathToFile, destFileName, true);
         }
 
         public void ResetOldFile()
@@ -92,3 +187,4 @@ namespace DataIntegration
         }
     }
 }
+

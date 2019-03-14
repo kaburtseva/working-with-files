@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Model;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -10,11 +11,14 @@ namespace JsonIntegration
     class JsonHelpers
     {
         private string PathToFile;
+        private string DuplicatePathToFile;
+        private static string sourceDir = @"C:\Users\kateryna.burtseva\Documents\working-with-files\working-with-files\DataIntegration\JsonIntegration\";
         public JsonHelpers(string pathToFile)
         {
             PathToFile = pathToFile;
+
         }
-        private string DuplicatePathToFile = @"E:\WorkWithFiles\DataIntegration\JsonIntegration\AccountsDuplicate.json";
+
         public Account GetAccount(string parameter, string parameterName)
         {
             using (StreamReader r = new StreamReader(PathToFile))
@@ -80,9 +84,15 @@ namespace JsonIntegration
 
         public void DulicateExistingFile()
         {
-            var jsonString = File.ReadAllText(PathToFile);
-            File.WriteAllText(DuplicatePathToFile, jsonString);
+            string sourceDirectory = Path.GetDirectoryName(PathToFile);
+            string filenameWithoutExtension = Path.GetFileNameWithoutExtension(PathToFile);
+            string fileExtension = Path.GetExtension(PathToFile);
+            string destFileName = Path.Combine(sourceDirectory, filenameWithoutExtension + "-dub" + fileExtension);
+            DuplicatePathToFile = destFileName;
+            File.Copy(PathToFile, destFileName, true);
+
         }
+
 
         public void ResetToOldFile()
         {
@@ -92,3 +102,4 @@ namespace JsonIntegration
 
     }
 }
+
