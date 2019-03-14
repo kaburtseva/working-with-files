@@ -9,7 +9,7 @@ namespace DataIntegration
         static void Main(string[] args)
         {
             ExcelHelpers exhelpers = new ExcelHelpers(pathToFile);
-            ExcelHelpers.KillExcell();
+           // ExcelHelpers.KillExcell();
             Account KaterinaAccount = exhelpers.GetAccount("Katerina");
 
 

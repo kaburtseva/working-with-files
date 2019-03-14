@@ -18,35 +18,44 @@ namespace DataIntegration
 {
     public class ExcelHelpers
     {
-        //TODO: declate excel variables(4). 
-        //TODO: Initiatilize excel method(open) - use in constructor
-        //TODO: Dispose excel method
+        //TODO: Initiatilize excel method(open) - use in constructor        
         //TODO: Update, delete, add new accounts method
-        
 
-        private string PathToFile;
+        private static string PathToFile;
         private string DuplicatePathToFile = null;
+        public static Excel.Application xlApp;
+        public static Excel.Workbook xlWorkbook;
+        public static Excel._Worksheet xlWorksheet;
+        Excel.Range xlRange;
+        Dictionary<string, int> accountMapping;
 
         public ExcelHelpers(string pathToFile)
         {
             PathToFile = pathToFile;
+            //InitializeExcel();
+            //xlWorkbook = xlApp.Workbooks.Open(PathToFile);
         }
 
-        Dictionary<string, int> accountMapping;
+      
+        public void InitializeExcel()
+        {
+            xlApp = new Excel.Application();
+            xlWorkbook = xlApp.Workbooks.Open(PathToFile);
+            xlWorksheet = xlWorkbook.Sheets[1];
+            xlRange = xlWorksheet.UsedRange;
+        }
         public Dictionary<string, int> MatchContentToIndex()
         {
             List<string> accountProperties = typeof(Account).GetProperties().Select(p => p.Name).ToList();
-            return GetPropertiesIndexes(accountProperties);          
+            return GetPropertiesIndexes(accountProperties);
         }
 
         public Dictionary<string, int> GetPropertiesIndexes(List<string> accountProperties)
         {
+            InitializeExcel();
+
             Dictionary<string, int> accountMapping = new Dictionary<string, int>();
 
-            Excel.Application xlApp = new Excel.Application();
-            Excel.Workbook xlWorkbook = xlApp.Workbooks.Open(PathToFile);
-            Excel._Worksheet xlWorksheet = xlWorkbook.Sheets[1];
-            Excel.Range xlRange = xlWorksheet.UsedRange;
             Excel.Range row1 = xlRange.Rows["1:1"];
 
             foreach (string propertyName in accountProperties)
@@ -63,15 +72,7 @@ namespace DataIntegration
 
                 accountMapping.Add(propertyName, colIndex);
             }
-
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
-            Marshal.ReleaseComObject(xlRange);
-            Marshal.ReleaseComObject(xlWorksheet);
-            xlWorkbook.Close();
-            Marshal.ReleaseComObject(xlWorkbook);
-            xlApp.Quit();
-            Marshal.ReleaseComObject(xlApp);
+            DisposeExcel();
             return accountMapping;
 
         }
@@ -81,21 +82,17 @@ namespace DataIntegration
         {
             accountMapping = MatchContentToIndex();
             List<Account> accountList = new List<Account>();
-            Excel.Application xlApp = new Excel.Application();
-            Excel.Workbook xlWorkbook = xlApp.Workbooks.Open(PathToFile);
-            Excel._Worksheet xlWorksheet = xlWorkbook.Sheets[1];
-            Excel.Range xlRange = xlWorksheet.UsedRange;
-
+            InitializeExcel();
             for (int rowIndex = 2; rowIndex <= 3; rowIndex++)
             {
-                Account account = new Account();             
+                Account account = new Account();
 
                 foreach (string propertyName in accountMapping.Keys)
                 {
                     object rangeObject = xlRange.Cells[rowIndex, accountMapping[propertyName]];
                     Range range = (Range)rangeObject;
                     object rangeValue = range.Value2;
-                    string value = rangeValue.ToString();                    
+                    string value = rangeValue.ToString();
                     Type accountType = typeof(Account);
                     PropertyInfo myPropertyInfo = accountType.GetProperty(propertyName);
                     var converter = TypeDescriptor.GetConverter(myPropertyInfo.PropertyType);
@@ -105,14 +102,7 @@ namespace DataIntegration
 
                 accountList.Add(account);
             }
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
-            Marshal.ReleaseComObject(xlRange);
-            Marshal.ReleaseComObject(xlWorksheet);
-            xlWorkbook.Close();
-            Marshal.ReleaseComObject(xlWorkbook);
-            xlApp.Quit();
-            Marshal.ReleaseComObject(xlApp);           
+            DisposeExcel();
             return accountList;
 
         }
@@ -160,7 +150,17 @@ namespace DataIntegration
         {
 
         }
-        
+        public void DisposeExcel()
+        {
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            Marshal.ReleaseComObject(xlRange);
+            Marshal.ReleaseComObject(xlWorksheet);
+            xlWorkbook.Close();
+            Marshal.ReleaseComObject(xlWorkbook);
+            xlApp.Quit();
+            Marshal.ReleaseComObject(xlApp);
+        }
         public void DuplicateCurrentFile()
         {
             string sourceDirectory = Path.GetDirectoryName(PathToFile);
