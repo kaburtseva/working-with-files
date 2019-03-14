@@ -3,3 +3,6 @@ Debug
 *.exe
 *.pdb
 .suo
+/.vs
+.ide-wal
+.ide-shm
