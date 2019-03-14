@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<Accounts>
+  <Account name="Katerina">
+    <FistName>Kate</FistName>
+    <LastName>Burtseva</LastName>
+    <LoginName>KBurtseva</LoginName>
+    <Password>123456789</Password>
+    <IsAdministrator>false</IsAdministrator>
+    <Enabled>true</Enabled>
+    <Language>Russian</Language>
+    <ExpirationDate>03-21-2020</ExpirationDate>
+  </Account>
+
+  <Account name="Alonka">
+    <FistName>Alona</FistName>
+    <LastName>Suprun</LastName>
+    <LoginName>ASuprun</LoginName>
+    <Password>123456789</Password>
+    <IsAdministrator>true</IsAdministrator>
+    <Enabled>true</Enabled>
+    <Language>Ukrainian</Language>
+    <ExpirationDate>12-13-2018</ExpirationDate>
+  </Account>
+</Accounts>

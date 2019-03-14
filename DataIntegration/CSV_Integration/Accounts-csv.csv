@@ -1,0 +1,3 @@
+AccountName,FistName,LastName,LoginName,Password,IsAdministrator,Enabled,Language,ExpirationDate
+Katerina,Kate,Burtseva,Kburtseva,123456789,FALSE,TRUE,Russian,3/21/2020
+Alonka,Alona,Suprun,ASuprun,123456789,TRUE,TRUE,Ukrainian,12/13/2018

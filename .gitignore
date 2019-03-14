@@ -1,0 +1,11 @@
+Debug
+*.cache
+*.exe
+*.pdb
+.suo
+/.vs
+.ide-wal
+.ide-shm
+/Xml_tasks/.vs/Xml_tasks/v15/Server/sqlite3
+/XmlTaskAccounts/.vs/XmlTaskAccounts/v15/Server/sqlite3
+/DataIntegration/.vs/DataIntegration/v15/Server/sqlite3
