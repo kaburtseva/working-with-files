@@ -1,5 +1,0 @@
-C:\Users\kateryna.burtseva\Documents\CharpTrivial\XmlTaskAccounts\Accounts\bin\Debug\Accounts.exe
-C:\Users\kateryna.burtseva\Documents\CharpTrivial\XmlTaskAccounts\Accounts\bin\Debug\Accounts.pdb
-C:\Users\kateryna.burtseva\Documents\CharpTrivial\XmlTaskAccounts\Accounts\obj\Debug\Accounts.csproj.CoreCompileInputs.cache
-C:\Users\kateryna.burtseva\Documents\CharpTrivial\XmlTaskAccounts\Accounts\obj\Debug\Accounts.exe
-C:\Users\kateryna.burtseva\Documents\CharpTrivial\XmlTaskAccounts\Accounts\obj\Debug\Accounts.pdb
