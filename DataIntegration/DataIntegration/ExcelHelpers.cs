@@ -93,6 +93,7 @@ namespace DataIntegration
             catch (Exception ex)
             {
                 Console.WriteLine($"Failed to add new record. {ex.ToString()}");
+                this.DisposeExcel();
                 throw ex;
             }
         }
