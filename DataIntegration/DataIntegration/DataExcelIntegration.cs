@@ -12,14 +12,11 @@ namespace DataIntegration
             ExcelHelpers.KillExcell();
             ExcelHelpers exhelpers = new ExcelHelpers(pathToFile);
             Account KaterinaAccount = exhelpers.GetAccount("Katerina");
-            KaterinaAccount.FirstName = "Kate2";
-            exhelpers.UpdateAccount(KaterinaAccount);            
-            var acc = new Account() { AccountName = "abc", Language = "RUS" };
-            exhelpers.AddNewAccount(acc);
-            exhelpers.DeleteAccount("abc");
-            exhelpers.DeleteAccount("Alonka");
-            Console.ReadLine();
 
+            KaterinaAccount.AccountName = "Katerina2";
+            exhelpers.AddNewAccount(KaterinaAccount);
+
+            Console.ReadLine();
         }
     }
 }

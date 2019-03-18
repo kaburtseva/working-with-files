@@ -18,9 +18,6 @@ namespace DataIntegration
 {
     public class ExcelHelpers
     {
-        //TODO: Initiatilize excel method(open) - use in constructor        
-        
-
         private static string PathToFile;
         private string DuplicatePathToFile = null;
         public static Excel.Application xlApp;
@@ -32,29 +29,27 @@ namespace DataIntegration
         public ExcelHelpers(string pathToFile)
         {
             PathToFile = pathToFile;
-            //InitializeExcel();
-            //xlWorkbook = xlApp.Workbooks.Open(PathToFile);
-        }
+            InitializeExcel();
+            accountMapping = MatchContentToIndex();
 
+        }
 
         public void InitializeExcel()
         {
-            Excel.Application xlApp = new Excel.Application();
+            xlApp = new Excel.Application();
             xlWorkbook = xlApp.Workbooks.Open(PathToFile);
             xlWorksheet = xlWorkbook.Sheets[1];
             xlRange = xlWorksheet.UsedRange;
         }
+
         public Dictionary<string, int> MatchContentToIndex()
         {
-            InitializeExcel();
             List<string> accountProperties = typeof(Account).GetProperties().Select(p => p.Name).ToList();
             return GetPropertiesIndexes(accountProperties);
         }
 
         public Dictionary<string, int> GetPropertiesIndexes(List<string> accountProperties)
         {
-            InitializeExcel();
-
             Dictionary<string, int> accountMapping = new Dictionary<string, int>();
 
             Excel.Range row1 = xlRange.Rows["1:1"];
@@ -73,17 +68,38 @@ namespace DataIntegration
 
                 accountMapping.Add(propertyName, colIndex);
             }
-            DisposeExcel();
             return accountMapping;
 
         }
 
+        public void AddNewAccount(Account account)
+        {
+            var accountList = GetAllAccounts();
+            int newRowIndex = accountList.Count + 2;
+
+            try
+            {
+                foreach (string propertyName in accountMapping.Keys)
+                {
+                    Type accountType = typeof(Account);
+                    PropertyInfo myPropertyInfo = accountType.GetProperty(propertyName);
+                    string value = myPropertyInfo.GetValue(account, null).ToString();
+                    int newColumn = accountMapping[propertyName];
+                    xlWorksheet.Cells[newRowIndex, newColumn].Value = value;
+                }
+
+                xlWorkbook.Save();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Failed to add new record. {ex.ToString()}");
+                throw ex;
+            }
+        }
 
         public List<Account> GetAllAccounts()
         {
-            accountMapping = MatchContentToIndex();
             List<Account> accountList = new List<Account>();
-            InitializeExcel();
             for (int rowIndex = 2; rowIndex <= 3; rowIndex++)
             {
                 Account account = new Account();
@@ -103,7 +119,6 @@ namespace DataIntegration
 
                 accountList.Add(account);
             }
-            DisposeExcel();
             return accountList;
 
         }
@@ -138,13 +153,6 @@ namespace DataIntegration
             DeleteAccount(accountToUpdate);
             AddNewAccount(accountToUpdate);
         }
-        public void AddNewAccount(Account account)
-        {
-            var accountList = GetAllAccounts();
-            accountList.Add(account);
-            //TODO: need to add new account into non used range(below table)
-            xlWorkbook.Save();
-        }
 
         public void DeleteAccount(Account account)
             => DeleteAccount(account.AccountName);
@@ -159,6 +167,7 @@ namespace DataIntegration
         {
 
         }
+
         public void DisposeExcel()
         {
             GC.Collect();
