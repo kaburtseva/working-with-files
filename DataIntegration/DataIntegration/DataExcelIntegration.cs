@@ -16,7 +16,7 @@ namespace DataIntegration
             KaterinaAccount.AccountName = "Katerina2";
             exhelpers.AddNewAccount(KaterinaAccount);
 
-            Console.ReadLine();
+            exhelpers.DisposeExcel();
         }
     }
 }
