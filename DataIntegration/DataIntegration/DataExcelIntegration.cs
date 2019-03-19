@@ -9,14 +9,12 @@ namespace DataIntegration
         private static readonly string pathToFile = @"E:\WorkWithFiles\DataIntegration\DataIntegration\Accounts_excels2.xlsx";
         static void Main(string[] args)
         {
-            ExcelHelpers.KillExcell();
-            ExcelHelpers exhelpers = new ExcelHelpers(pathToFile);
-            Account KaterinaAccount = exhelpers.GetAccount("Katerina");
+            ExcelHelper.KillExcell();
 
-            KaterinaAccount.AccountName = "Katerina2";
-            exhelpers.AddNewAccount(KaterinaAccount);
-
-            exhelpers.DisposeExcel();
+            using (ExcelHelper exhelper = new ExcelHelper(pathToFile))
+            {
+                Account KaterinaAccount = exhelper.GetAccount("Katerina");
+            }
         }
     }
 }
