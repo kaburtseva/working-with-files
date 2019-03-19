@@ -16,7 +16,7 @@ using System.Diagnostics;
 
 namespace DataIntegration
 {
-    public class ExcelHelpers
+    public class ExcelHelper : IDisposable
     {
         private static string PathToFile;
         private string DuplicatePathToFile = null;
@@ -26,12 +26,15 @@ namespace DataIntegration
         Excel.Range xlRange;
         Dictionary<string, int> accountMapping;
 
-        public ExcelHelpers(string pathToFile)
+        public ExcelHelper(string pathToFile)
         {
-            PathToFile = pathToFile;
-            InitializeExcel();
-            accountMapping = MatchContentToIndex();
-
+            if (File.Exists(pathToFile))
+            {
+                PathToFile = pathToFile;
+                InitializeExcel();
+                accountMapping = MatchContentToIndex();
+            } else 
+                throw new FileNotFoundException($"File '{pathToFile}' does not exist");
         }
 
         public void InitializeExcel()
@@ -61,8 +64,8 @@ namespace DataIntegration
                 {
                     if (cell.Text == propertyName)
                     {
-                        Console.WriteLine(cell.Text);
                         colIndex = cell.Column;
+                        Console.WriteLine($"Property '{cell.Text}' has index '{colIndex}'");
                     }
                 }
 
@@ -93,7 +96,7 @@ namespace DataIntegration
             catch (Exception ex)
             {
                 Console.WriteLine($"Failed to add new record. {ex.ToString()}");
-                this.DisposeExcel();
+                this.Dispose();
                 throw ex;
             }
         }
@@ -169,7 +172,7 @@ namespace DataIntegration
 
         }
 
-        public void DisposeExcel()
+        public void Dispose()
         {
             GC.Collect();
             GC.WaitForPendingFinalizers();
