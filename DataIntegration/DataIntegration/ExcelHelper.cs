@@ -163,7 +163,9 @@ namespace DataIntegration
         public void DeleteAccount(string accountName)
         {
             var accountList = GetAllAccounts();
-            accountList.RemoveAll(account => account.AccountName == accountName);
+            int rowIndex = accountList.IndexOf(accountList.Where(i => i.AccountName == accountName).FirstOrDefault());
+            rowIndex = rowIndex + 1;
+            xlWorksheet.Rows[rowIndex].Delete(Excel.XlDeleteShiftDirection.xlShiftUp);
             xlWorkbook.Save();
         }
 

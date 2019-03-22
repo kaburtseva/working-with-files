@@ -6,14 +6,17 @@ namespace DataIntegration
     public class DataExcelIntegration
     {
 
-        private static readonly string pathToFile = @"E:\WorkWithFiles\DataIntegration\DataIntegration\Accounts_excels2.xlsx";
+        private static readonly string pathToFile = @"C:\Users\kateryna.burtseva\Documents\working-with-files\working-with-files\DataIntegration\DataIntegration\Accounts_excels2.xlsx";
         static void Main(string[] args)
         {
             ExcelHelper.KillExcell();
 
             using (ExcelHelper exhelper = new ExcelHelper(pathToFile))
             {
-                Account KaterinaAccount = exhelper.GetAccount("Katerina");
+                Account KaterinaAccount = exhelper.GetAccount("Katerina");                
+                var acc = new Account() { AccountName = "Vasya", Language = "RUS" };
+                exhelper.AddNewAccount(acc);                
+                exhelper.DeleteAccount("Vasya");
             }
         }
     }
