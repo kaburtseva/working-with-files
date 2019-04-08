@@ -20,6 +20,7 @@ namespace DataIntegration
     {
         private static string PathToFile;
         private string DuplicatePathToFile = null;
+        private string BackUp = null;
         public static Excel.Application xlApp;
         public static Excel.Workbook xlWorkbook;
         public static Excel._Worksheet xlWorksheet;
@@ -33,7 +34,8 @@ namespace DataIntegration
                 PathToFile = pathToFile;
                 InitializeExcel();
                 accountMapping = MatchContentToIndex();
-            } else 
+            }
+            else
                 throw new FileNotFoundException($"File '{pathToFile}' does not exist");
         }
 
@@ -86,7 +88,8 @@ namespace DataIntegration
                 {
                     Type accountType = typeof(Account);
                     PropertyInfo myPropertyInfo = accountType.GetProperty(propertyName);
-                    string value = myPropertyInfo.GetValue(account, null).ToString();
+
+                    string value = myPropertyInfo.GetValue(account, null)?.ToString() ?? string.Empty;
                     int newColumn = accountMapping[propertyName];
                     xlWorksheet.Cells[newRowIndex, newColumn].Value = value;
                 }
@@ -104,7 +107,12 @@ namespace DataIntegration
         public List<Account> GetAllAccounts()
         {
             List<Account> accountList = new List<Account>();
-            for (int rowIndex = 2; rowIndex <= 3; rowIndex++)
+            int lastUsedRow = xlWorksheet.Cells.Find("*", System.Reflection.Missing.Value,
+                               System.Reflection.Missing.Value, System.Reflection.Missing.Value,
+                               Excel.XlSearchOrder.xlByRows, Excel.XlSearchDirection.xlPrevious,
+                               false, System.Reflection.Missing.Value, System.Reflection.Missing.Value).Row;
+
+            for (int rowIndex = 2; rowIndex <= lastUsedRow; rowIndex++)
             {
                 Account account = new Account();
 
@@ -164,7 +172,7 @@ namespace DataIntegration
         {
             var accountList = GetAllAccounts();
             int rowIndex = accountList.IndexOf(accountList.Where(i => i.AccountName == accountName).FirstOrDefault());
-            rowIndex = rowIndex + 1;
+            rowIndex = rowIndex + 2;
             xlWorksheet.Rows[rowIndex].Delete(Excel.XlDeleteShiftDirection.xlShiftUp);
             xlWorkbook.Save();
         }
@@ -193,12 +201,15 @@ namespace DataIntegration
             string destFileName = Path.Combine(sourceDirectory, filenameWithoutExtension + "-dub" + fileExtension);
             DuplicatePathToFile = destFileName;
             File.Copy(PathToFile, destFileName, true);
+            Dispose();
+
         }
 
         public void ResetOldFile()
         {
-            var exString = File.ReadAllText(DuplicatePathToFile);
-            File.WriteAllText(PathToFile, exString);
+            //var exString = File.ReadAllText(DuplicatePathToFile);
+            //File.WriteAllText(PathToFile, exString);
+            File.Replace(DuplicatePathToFile, PathToFile, BackUp);
         }
     }
 }

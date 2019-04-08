@@ -10,14 +10,14 @@ namespace Model
     [Serializable]
     public class Account
     {
-        public string FirstName { get; set; }
+        public string FirstName { get; set; } 
         public string LastName { get; set; }
         public string LoginName { get; set; }
         public string Password { get; set; }
         public bool IsAdministrator { get; set; }
         public bool Enabled { get; set; }
         public string Language { get; set; }
-        public DateTime ExpirationDate { get; set; } 
+        public DateTime ExpirationDate { get; set; } = DateTime.Now;
           
         public string AccountName { get; set; }
         
