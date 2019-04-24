@@ -14,9 +14,11 @@ using System.Runtime.InteropServices;
 using System.ComponentModel;
 using System.Diagnostics;
 
-namespace DataIntegration
+namespace FileProcessors
+
 {
-    public class ExcelHelper : IDisposable
+    public class ExcelEditor : IDisposable, IFileEditor
+
     {
         private static string PathToFile;
         private string DuplicatePathToFile = null;
@@ -27,7 +29,7 @@ namespace DataIntegration
         Excel.Range xlRange;
         Dictionary<string, int> accountMapping;
 
-        public ExcelHelper(string pathToFile)
+        public ExcelEditor(string pathToFile)
         {
             if (File.Exists(pathToFile))
             {
@@ -47,9 +49,9 @@ namespace DataIntegration
             xlRange = xlWorksheet.UsedRange;
         }
 
-        public Dictionary<string, int> MatchContentToIndex()
+        public Dictionary<string, int> MatchContentToIndex<T>()
         {
-            List<string> accountProperties = typeof(Account).GetProperties().Select(p => p.Name).ToList();
+            List<string> accountProperties = typeof(T).GetProperties().Select(p => p.Name).ToList();
             return GetPropertiesIndexes(accountProperties);
         }
 
@@ -77,7 +79,7 @@ namespace DataIntegration
 
         }
 
-        public void AddNewAccount(Account account)
+        public void AddNewRecord<T>(T record)
         {
             var accountList = GetAllAccounts();
             int newRowIndex = accountList.Count + 2;
@@ -89,7 +91,7 @@ namespace DataIntegration
                     Type accountType = typeof(Account);
                     PropertyInfo myPropertyInfo = accountType.GetProperty(propertyName);
 
-                    string value = myPropertyInfo.GetValue(account, null)?.ToString() ?? string.Empty;
+                    string value = myPropertyInfo.GetValue(record, null)?.ToString() ?? string.Empty;
                     int newColumn = accountMapping[propertyName];
                     xlWorksheet.Cells[newRowIndex, newColumn].Value = value;
                 }
@@ -152,18 +154,19 @@ namespace DataIntegration
             }
         }
 
-        public Account GetAccount(string accountName)
+        public Account GetAccount(string parameter, string accountName)
         {
             var accountList = GetAllAccounts();
+            //TODO: Add string parameter name
             var acc = accountList.Where(i => i.AccountName == accountName).FirstOrDefault();
             return acc;
         }
 
         public void UpdateAccount(Account accountToUpdate)
         {
-            Account account = GetAccount(accountToUpdate.AccountName);
+            Account account = GetAccount("AccountName", accountToUpdate.AccountName);
             DeleteAccount(accountToUpdate);
-            AddNewAccount(accountToUpdate);
+            AddNewRecord(accountToUpdate);
         }
 
         public void DeleteAccount(Account account)

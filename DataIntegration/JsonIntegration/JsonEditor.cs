@@ -6,14 +6,15 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-namespace JsonIntegration
+namespace FileProcessors
+    
 {
-    class JsonHelpers
+    public class JsonEditor : IFileEditor
     {
         private string PathToFile;
         private string DuplicatePathToFile;
         private static string sourceDir = @"C:\Users\kateryna.burtseva\Documents\working-with-files\working-with-files\DataIntegration\JsonIntegration\";
-        public JsonHelpers(string pathToFile)
+        public JsonEditor(string pathToFile)
         {
             PathToFile = pathToFile;
 
@@ -43,15 +44,15 @@ namespace JsonIntegration
         {
             Account account = GetAccount("AccountName", accountToUpdate.AccountName);
             DeleteAccount(accountToUpdate);
-            AddNewAccount(accountToUpdate);
+            AddNewRecord(accountToUpdate);
 
         }
 
-        public void AddNewAccount(Account account)
+        public void AddNewRecord<T>(T record)
         {
             var jsonString = File.ReadAllText(PathToFile);
-            var list = JsonConvert.DeserializeObject<List<Account>>(jsonString);
-            list.Add(account);
+            var list = JsonConvert.DeserializeObject<List<T>>(jsonString);
+            list.Add(record);
             var convertedJson = JsonConvert.SerializeObject(list, Formatting.Indented,
                 new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
             File.WriteAllText(PathToFile, convertedJson);
